@@ -9,7 +9,6 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="My Log Console" anchor="bottom" factoryClass="com.github.ramihage.testplugin.logconsole.MyLogConsole" />
         <toolWindow factoryClass="com.github.ramihage.testplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <postStartupActivity implementation="com.github.ramihage.testplugin.startup.MyProjectActivity" />
     </extensions>

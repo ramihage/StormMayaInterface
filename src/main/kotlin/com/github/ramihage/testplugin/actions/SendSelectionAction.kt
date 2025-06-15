@@ -5,8 +5,8 @@ import com.github.ramihage.testplugin.dccinterface.DccInterface
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.project.DumbAwareAction
-import com.intellij.notification.Notifications
-import com.github.ramihage.testplugin.logconsole.MyLogConsole
+import com.github.ramihage.testplugin.logconsole.createOrGetConsole
+import com.intellij.execution.ui.ConsoleViewContentType
 import com.intellij.openapi.project.Project
 
 class SendSelectionAction : DumbAwareAction(
@@ -22,9 +22,11 @@ class SendSelectionAction : DumbAwareAction(
         if (selectionModel.hasSelection()) {
             selectedText = selectionModel.selectedText
         } else return
+        // Send the selected text to Maya
+        val mayaOutput: String = DccInterface(4434).sendCodeToMaya(selectedText!!)
 
-//        DccInterface(4434, MyLogConsole()).sendCodeToMaya(selectedText!!)
-        val currentProject: Project? = e.project
-        DccInterface(4434).printCodeToConsole(selectedText!!, currentProject)
+        val currentProject: Project = e.project ?: return
+        val console = createOrGetConsole(currentProject)
+        console.print(mayaOutput, ConsoleViewContentType.NORMAL_OUTPUT)
     }
 }

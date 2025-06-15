@@ -4,6 +4,7 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 import com.github.ramihage.testplugin.MyBundle
+import com.github.ramihage.testplugin.dccinterface.DccInterface
 
 @Service(Service.Level.PROJECT)
 class MyProjectService(project: Project) {
