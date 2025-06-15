@@ -9,7 +9,15 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="My Log Console" anchor="bottom" factoryClass="com.github.ramihage.testplugin.logconsole.MyLogConsole" />
         <toolWindow factoryClass="com.github.ramihage.testplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <postStartupActivity implementation="com.github.ramihage.testplugin.startup.MyProjectActivity" />
     </extensions>
+    <actions>
+        <action id="com.github.ramihage.testplugin.actions.SendSelectionAction"
+                class="com.github.ramihage.testplugin.actions.SendSelectionAction" text="SendToMaya">
+            <add-to-group group-id="RunMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt S"/>
+        </action>
+    </actions>
 </idea-plugin>
