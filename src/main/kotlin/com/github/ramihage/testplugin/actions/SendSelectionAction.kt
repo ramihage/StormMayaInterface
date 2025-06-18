@@ -15,18 +15,32 @@ class SendSelectionAction : DumbAwareAction(
     null
 ) {
     override fun actionPerformed(e: AnActionEvent) {
-
         val selectionModel = e.getData(LangDataKeys.EDITOR)?.selectionModel ?: return
         val selectedText: String?
 
         if (selectionModel.hasSelection()) {
             selectedText = selectionModel.selectedText
         } else return
+
+        val dccInterface = DccInterface(4434)
         // Send the selected text to Maya
-        val mayaOutput: String = DccInterface(4434).sendCodeToMaya(selectedText!!)
+        dccInterface.sendCodeToMaya(selectedText!!)
+        
+        // Give Maya a moment to write to the file
+        Thread.sleep(100)
+        
+        // Read the temp file contents
+        val tempFileContents = try {
+            DccInterface.tempFile.readText()
+        } catch (e: Exception) {
+            "Error reading temp file: ${e.message}"
+        }
 
         val currentProject: Project = e.project ?: return
         val console = createOrGetConsole(currentProject)
-        console.print(mayaOutput, ConsoleViewContentType.NORMAL_OUTPUT)
+        
+        // Print the temp file contents to the console
+        console.print("Maya Output:\n", ConsoleViewContentType.SYSTEM_OUTPUT)
+        console.print("$tempFileContents\n", ConsoleViewContentType.NORMAL_OUTPUT)
     }
 }

@@ -1,29 +1,71 @@
 package com.github.ramihage.testplugin.dccinterface
 
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.Json
 import java.io.IOException
+import java.io.File
 import java.net.Socket
+import kotlin.io.path.absolutePathString
 
 class DccInterface(private val port: Int) : AutoCloseable {
     private var client: Socket? = null
+
+    companion object {
+        private val _tempFile: File by lazy {
+            File.createTempFile("maya_output", ".tmp").also {
+                it.deleteOnExit() // Ensures the file is deleted when the JVM exits
+            }
+        }
+
+        val tempFile: File
+            get() = _tempFile
+    }
 
     fun sendCodeToMaya(message: String): String {
         try {
             client = Socket("localhost", port)
             client?.use { socket ->
-                val outString = "python(\"%s\")".format(message)
-                socket.outputStream.write(outString.toByteArray())
-                // Read the response
-                val inputStream = socket.inputStream
-                val response = buildString {
-                    val buffer = ByteArray(1024)
-                    var bytesRead: Int
-                    while (inputStream.available() > 0) {
-                        bytesRead = inputStream.read(buffer)
-                        if (bytesRead == -1) break
-                        append(buffer.decodeToString(0, bytesRead))
-                    }
+                // Set a timeout to prevent blocking indefinitely
+                socket.soTimeout = 2000 // 1 second timeout
+
+                val tempFilePath = _tempFile.toPath().absolutePathString()
+                val fullCommand = buildString {
+                    append("import maya.cmds as cmds\n")
+                    append("import sys\n")
+                    append("import traceback\n")
+                    append("import os\n")  // For file cleanup
+                    append("temp_file_path = r'%s'\n".format(tempFilePath))
+                    append("cmds.cmdFileOutput(open=temp_file_path)\n")
+                    append("try:\n")
+                    append("    exec(%s)\n".format(Json.encodeToString(String.serializer(), message)))
+                    append("except Exception as e:\n")
+                    append("    with open(temp_file_path, 'a') as f:\n")
+                    append("        f.write('Python Exception: ' + str(e) + '\\n')\n")
+                    append("        f.write(traceback.format_exc() + '\\n')\n")
+                    append("finally:\n")
+                    append("    with open(temp_file_path, 'a') as f:\n")
+                    append("        f.write('COMPLETED\\n')\n")
+                    append("    cmds.cmdFileOutput(closeAll=True)\n")
                 }
-                return response
+                // Make sure the message is correctly escaped by using a json serializer
+                val outString = "python(%s)".format(
+                    Json.encodeToString(String.serializer(), fullCommand)
+                )
+                socket.outputStream.write(outString.toByteArray())
+                socket.outputStream.flush()
+
+//                // Read the response
+//                val inputStream = socket.inputStream
+//                val buffer = ByteArray(4096)
+//                try {
+//                    val bytesRead = inputStream.read(buffer)
+//                    return if (bytesRead > 0) {
+//                        buffer.decodeToString(0, bytesRead)
+//                    } else ""
+//                } catch (e: IOException) {
+//                    // Timeout or other IO error
+//                    return ""
+//                }
             }
         } catch (e: IOException) {
             return e.message ?: ""
