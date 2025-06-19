@@ -47,25 +47,9 @@ class DccInterface(private val port: Int) : AutoCloseable {
                     append("        f.write('COMPLETED\\n')\n")
                     append("    cmds.cmdFileOutput(closeAll=True)\n")
                 }
-                // Make sure the message is correctly escaped by using a json serializer
-                val outString = "python(%s)".format(
-                    Json.encodeToString(String.serializer(), fullCommand)
-                )
-                socket.outputStream.write(outString.toByteArray())
+                socket.outputStream.write(fullCommand.toByteArray())
                 socket.outputStream.flush()
 
-//                // Read the response
-//                val inputStream = socket.inputStream
-//                val buffer = ByteArray(4096)
-//                try {
-//                    val bytesRead = inputStream.read(buffer)
-//                    return if (bytesRead > 0) {
-//                        buffer.decodeToString(0, bytesRead)
-//                    } else ""
-//                } catch (e: IOException) {
-//                    // Timeout or other IO error
-//                    return ""
-//                }
             }
         } catch (e: IOException) {
             return e.message ?: ""

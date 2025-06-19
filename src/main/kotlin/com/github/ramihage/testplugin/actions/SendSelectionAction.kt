@@ -29,18 +29,37 @@ class SendSelectionAction : DumbAwareAction(
         // Give Maya a moment to write to the file
         Thread.sleep(100)
         
-        // Read the temp file contents
-        val tempFileContents = try {
-            DccInterface.tempFile.readText()
-        } catch (e: Exception) {
-            "Error reading temp file: ${e.message}"
-        }
-
         val currentProject: Project = e.project ?: return
         val console = createOrGetConsole(currentProject)
         
-        // Print the temp file contents to the console
+        // Print header to the console
         console.print("Maya Output:\n", ConsoleViewContentType.SYSTEM_OUTPUT)
-        console.print("$tempFileContents\n", ConsoleViewContentType.NORMAL_OUTPUT)
+        
+        // Read and process the temp file contents line by line
+        try {
+            DccInterface.tempFile.useLines { lines ->
+                var isInErrorBlock = false
+                lines.forEach { line ->
+                    when {
+                        line.startsWith("Python Exception: ") -> {
+                            isInErrorBlock = true
+                            console.print("$line\n", ConsoleViewContentType.ERROR_OUTPUT)
+                        }
+                        line == "COMPLETED" -> {
+                            isInErrorBlock = false
+                            console.print("$line\n", ConsoleViewContentType.NORMAL_OUTPUT)
+                        }
+                        isInErrorBlock -> {
+                            console.print("$line\n", ConsoleViewContentType.ERROR_OUTPUT)
+                        }
+                        else -> {
+                            console.print("$line\n", ConsoleViewContentType.NORMAL_OUTPUT)
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            console.print("Error reading temp file: ${e.message}\n", ConsoleViewContentType.ERROR_OUTPUT)
+        }
     }
 }
