@@ -11,7 +11,7 @@ fun createOrGetConsole(project: Project): ConsoleView {
     // Try to find existing console
     val existingContent = RunContentManager.getInstance(project)
         .allDescriptors
-        .find { it.displayName == "My Plugin Console" }
+        .find { it.displayName == "Dcc Output" }
         ?.executionConsole as? ConsoleView
 
     if (existingContent != null) {
@@ -26,7 +26,7 @@ fun createOrGetConsole(project: Project): ConsoleView {
         consoleView,
         null,  // ProcessHandler is null since we're not running a process
         consoleView.component,
-        "My Plugin Console"
+        "Dcc Output"
     )
 
     // Add the console to the Run tool window
