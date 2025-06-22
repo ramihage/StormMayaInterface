@@ -1,9 +1,9 @@
-package com.github.ramihage.testplugin.notifications
+package com.github.ramihage.stormdccinterface.notifications
 
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 
-import com.github.ramihage.testplugin.MyBundle
+import com.github.ramihage.stormdccinterface.MyBundle
 
 private const val displayGroup = "MayaCharm"
 private const val titleText = "MayaCharm"

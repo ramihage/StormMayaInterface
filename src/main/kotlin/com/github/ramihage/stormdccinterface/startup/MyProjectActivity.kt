@@ -1,4 +1,4 @@
-package com.github.ramihage.testplugin.startup
+package com.github.ramihage.stormdccinterface.startup
 
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project

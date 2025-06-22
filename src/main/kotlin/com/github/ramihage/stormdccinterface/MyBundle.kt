@@ -1,4 +1,4 @@
-package com.github.ramihage.testplugin
+package com.github.ramihage.stormdccinterface
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls

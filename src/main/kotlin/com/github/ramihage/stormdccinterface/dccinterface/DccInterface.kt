@@ -1,4 +1,4 @@
-package com.github.ramihage.testplugin.dccinterface
+package com.github.ramihage.stormdccinterface.dccinterface
 
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json

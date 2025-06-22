@@ -1,4 +1,4 @@
-package com.github.ramihage.testplugin.logconsole
+package com.github.ramihage.stormdccinterface.logconsole
 
 import com.intellij.execution.executors.DefaultRunExecutor
 import com.intellij.execution.filters.TextConsoleBuilderFactory

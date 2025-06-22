@@ -1,4 +1,4 @@
-package com.github.ramihage.testplugin.toolWindow
+package com.github.ramihage.stormdccinterface.toolWindow
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.thisLogger
@@ -8,8 +8,8 @@ import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBPanel
 import com.intellij.ui.content.ContentFactory
-import com.github.ramihage.testplugin.MyBundle
-import com.github.ramihage.testplugin.services.MyProjectService
+import com.github.ramihage.stormdccinterface.MyBundle
+import com.github.ramihage.stormdccinterface.services.MyProjectService
 import javax.swing.JButton
 
 

@@ -1,10 +1,10 @@
-package com.github.ramihage.testplugin.services
+package com.github.ramihage.stormdccinterface.services
 
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
-import com.github.ramihage.testplugin.MyBundle
-import com.github.ramihage.testplugin.dccinterface.DccInterface
+import com.github.ramihage.stormdccinterface.MyBundle
+import com.github.ramihage.stormdccinterface.dccinterface.DccInterface
 
 @Service(Service.Level.PROJECT)
 class MyProjectService(project: Project) {
