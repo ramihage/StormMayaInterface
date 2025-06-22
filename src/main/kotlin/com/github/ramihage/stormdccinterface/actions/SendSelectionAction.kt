@@ -10,8 +10,8 @@ import com.intellij.execution.ui.ConsoleViewContentType
 import com.intellij.openapi.project.Project
 
 class SendSelectionAction : DumbAwareAction(
-    MyBundle.message("mayacharm.action.SendSelectionText"),
-    MyBundle.message("mayacharm.action.SendSelectionDescription"),
+    MyBundle.message("stormdccinterface.action.SendSelectionText"),
+    MyBundle.message("stormdccinterface.action.SendSelectionDescription"),
     null
 ) {
     override fun actionPerformed(e: AnActionEvent) {
