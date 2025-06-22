@@ -1,6 +1,6 @@
 package com.github.ramihage.stormdccinterface.dccinterface
 
-import com.github.ramihage.stormdccinterface.notifications.DccNotifications.createConnectionRefusedNotification
+import com.github.ramihage.stormdccinterface.notifications.DccNotifications
 import com.intellij.notification.Notifications
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
@@ -54,7 +54,8 @@ class DccInterface(private val port: Int) : AutoCloseable {
 
             }
         } catch (e: IOException) {
-            return e.message ?: ""
+            Notifications.Bus.notify(DccNotifications.createConnectionRefusedNotification())
+            e.printStackTrace()
         }
         // If the client is null, the connection was refused
         return ""

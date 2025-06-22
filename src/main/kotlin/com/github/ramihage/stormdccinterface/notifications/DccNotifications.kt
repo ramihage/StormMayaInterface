@@ -6,12 +6,19 @@ import com.intellij.notification.NotificationType
 import com.github.ramihage.stormdccinterface.MyBundle
 import com.github.ramihage.stormdccinterface.toolWindow.MyToolWindowFactory
 
-private const val displayGroup = "StormDCC Interface Plugin"
-private const val titleText = "StormDCC Interface Plugin"
+private const val displayGroup = "Storm DCC Interface Plugin"
+private const val titleText = "Storm DCC Interface Plugin"
 
 object DccNotifications {
-    val CONNECTION_REFUSED = Notification(
-        displayGroup, titleText,
-        MyBundle.message("stormdccinterface.notifications.ConnectionRefused"), NotificationType.ERROR
-    )
+    fun createConnectionRefusedNotification(): Notification {
+        return Notification(
+            displayGroup, 
+            titleText,
+            MyBundle.message(
+                "stormdccinterface.notifications.ConnectionRefused",
+                MyToolWindowFactory.StormDccInterfaceWindow.currentDcc
+            ), 
+            NotificationType.ERROR
+        )
+    }
 }

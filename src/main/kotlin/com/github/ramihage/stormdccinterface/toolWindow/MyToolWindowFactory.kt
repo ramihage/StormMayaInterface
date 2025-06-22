@@ -24,6 +24,9 @@ class MyToolWindowFactory : ToolWindowFactory {
     override fun shouldBeAvailable(project: Project) = true
 
     class StormDccInterfaceWindow() {
+        companion object{
+            var currentDcc: String = "None selected"
+        }
         private val dccOptions = arrayOf("Maya", "Houdini", "Nuke")
         private val dccInfoMap = mapOf(
             "Maya" to MyBundle.message("stormdccinterface.command.ListenOnPortCommandMaya"),
@@ -39,6 +42,7 @@ class MyToolWindowFactory : ToolWindowFactory {
         fun getContent() = JBPanel<JBPanel<*>>().apply {
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
             border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+            currentDcc = dccOptions[0]
             
             // Create the combo box
             val dccSelector = JComboBox(dccOptions).apply {
@@ -115,6 +119,7 @@ class MyToolWindowFactory : ToolWindowFactory {
             // Add action listener to combo box
             dccSelector.addActionListener {
                 val selectedDcc = dccSelector.selectedItem as String
+                currentDcc = selectedDcc
                 infoTextArea.text = dccInfoMap.getOrDefault(selectedDcc, "")
                 dynamicLabel.text = MyBundle.message("stormdccinterface.command.Title", selectedDcc)
                 closeInfoTextArea.text = dccCloseInfoMap.getOrDefault(selectedDcc, "")
