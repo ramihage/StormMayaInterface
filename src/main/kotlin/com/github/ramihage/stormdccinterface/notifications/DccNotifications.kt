@@ -4,9 +4,10 @@ import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 
 import com.github.ramihage.stormdccinterface.MyBundle
+import com.github.ramihage.stormdccinterface.toolWindow.MyToolWindowFactory
 
-private const val displayGroup = "MayaCharm"
-private const val titleText = "MayaCharm"
+private const val displayGroup = "StormDCC Interface Plugin"
+private const val titleText = "StormDCC Interface Plugin"
 
 object DccNotifications {
     val CONNECTION_REFUSED = Notification(

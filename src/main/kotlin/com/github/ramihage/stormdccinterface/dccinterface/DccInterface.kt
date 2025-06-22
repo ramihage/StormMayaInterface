@@ -1,5 +1,7 @@
 package com.github.ramihage.stormdccinterface.dccinterface
 
+import com.github.ramihage.stormdccinterface.notifications.DccNotifications.createConnectionRefusedNotification
+import com.intellij.notification.Notifications
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import java.io.IOException

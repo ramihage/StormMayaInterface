@@ -16,14 +16,14 @@ import java.awt.BorderLayout
 class MyToolWindowFactory : ToolWindowFactory {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        val stormDccInterface = StormDccInterface()
-        val content = ContentFactory.getInstance().createContent(stormDccInterface.getContent(), null, false)
+        val stormDccInterfaceWindow = StormDccInterfaceWindow()
+        val content = ContentFactory.getInstance().createContent(stormDccInterfaceWindow.getContent(), null, false)
         toolWindow.contentManager.addContent(content)
     }
 
     override fun shouldBeAvailable(project: Project) = true
 
-    class StormDccInterface() {
+    class StormDccInterfaceWindow() {
         private val dccOptions = arrayOf("Maya", "Houdini", "Nuke")
         private val dccInfoMap = mapOf(
             "Maya" to MyBundle.message("stormdccinterface.command.ListenOnPortCommandMaya"),

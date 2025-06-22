@@ -14,7 +14,7 @@
     </extensions>
     <actions>
         <action id="com.github.ramihage.stormdccinterface.actions.SendSelectionAction"
-                class="com.github.ramihage.stormdccinterface.actions.SendSelectionAction" text="SendToMaya">
+                class="com.github.ramihage.stormdccinterface.actions.SendSelectionAction">
             <add-to-group group-id="RunMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt S"/>
         </action>
