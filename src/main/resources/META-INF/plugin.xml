@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.ramihage.testplugin</id>
-    <name>TestPlugin</name>
+    <id>com.github.ramihage.stormdccinterface</id>
+    <name>StormDccInterface</name>
     <vendor>ramihage</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -9,12 +9,12 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.ramihage.testplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.ramihage.testplugin.startup.MyProjectActivity" />
+        <toolWindow factoryClass="com.github.ramihage.stormdccinterface.toolWindow.MyToolWindowFactory" id="Storm Dcc Interface"/>
+        <postStartupActivity implementation="com.github.ramihage.stormdccinterface.startup.MyProjectActivity" />
     </extensions>
     <actions>
-        <action id="com.github.ramihage.testplugin.actions.SendSelectionAction"
-                class="com.github.ramihage.testplugin.actions.SendSelectionAction" text="SendToMaya">
+        <action id="com.github.ramihage.stormdccinterface.actions.SendSelectionAction"
+                class="com.github.ramihage.stormdccinterface.actions.SendSelectionAction">
             <add-to-group group-id="RunMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt S"/>
         </action>
